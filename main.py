@@ -3,7 +3,7 @@ from sprites import *
 from setting import *
 
 class Game:
-    def __init__(self): #DONE
+    def __init__(self): 
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(TITLE)
@@ -13,12 +13,12 @@ class Game:
         self.flash = [Flash(0,0,WIDTH,HEIGHT,WHITE,3,self.screen)]
         self.buttons = [Button(110,30,DARKGREEN),Button(330,30,DARKRED),Button(110,250,DARKYELLOW),Button(330,250,DARKBLUE)]
 
-    def get_max_score(self): #DONE
+    def get_max_score(self): 
         with open("max_score.txt", "r") as file:
             score = file.read()
         return int(score)
 
-    def save_score(self): #DONE
+    def save_score(self): 
         with open("max_score.txt", "w") as file:
             if self.score > self.max_score:
                 self.max_score = self.score
@@ -40,7 +40,7 @@ class Game:
             self.draw()
             self.update()
 
-    def update(self): #HALFDONE
+    def update(self):
         if not self.waiting_player:
             pygame.time.wait(1000) #time between stages
             self.order.append(random.choice(self.dark_colours))
@@ -50,18 +50,15 @@ class Game:
             self.waiting_player = True
         
         else:
-            # pushed the correct button
             if self.clicked_button and self.clicked_button == self.order[self.current_step]:
                 self.button_animation(self.clicked_button)
                 self.current_step += 1
 
-                # pushed the last button
                 if self.current_step == len(self.order):
                     self.score += 1
                     self.waiting_player = False
                     self.current_step = 0
 
-            # pushed the wrong button
             elif self.clicked_button and self.clicked_button != self.order[self.current_step]:
                 self.flash[0].animation()
                 self.save_score()
@@ -75,7 +72,7 @@ class Game:
             button.draw(self.screen)
         pygame.display.update()
     
-    def button_animation(self, colour): #DONE
+    def button_animation(self, colour): 
         for i in range(len(self.colours)):
                 if self.dark_colours[i] == colour:
                     colour = self.colours[i]
@@ -83,7 +80,7 @@ class Game:
         button_flash = Flash(button.x,button.y,SIZE_OF_BUTTON,SIZE_OF_BUTTON,colour,1,self.screen)
         button_flash.animation()
 
-    def events(self): #DONE
+    def events(self): 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

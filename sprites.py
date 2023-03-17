@@ -1,7 +1,7 @@
 import pygame
 from setting import *
 clock = pygame.time.Clock()
-#button class
+
 class Button:
     def __init__(self, x, y, colour):
         self.x, self.y = x, y
@@ -12,7 +12,6 @@ class Button:
 
     def clicked(self, mouse_x, mouse_y):
         return self.x <= mouse_x <= self.x + SIZE_OF_BUTTON and self.y <= mouse_y <= self.y + SIZE_OF_BUTTON
-
 
 class TextOnScreen:
     def __init__(self, x, y, text):

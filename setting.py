@@ -11,7 +11,7 @@ BLUE = (0, 0, 255)
 DARKBLUE = (0, 0, 155)
 
 
-# game settings
+# Game Settings
 WIDTH = 640
 HEIGHT = 520
 FPS = 60

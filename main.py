@@ -12,6 +12,10 @@ class Game:
         self.dark_colours = [DARKGREEN,DARKRED, DARKYELLOW, DARKBLUE]
         self.flash = [Flash(0,0,WIDTH,HEIGHT,WHITE,3,self.screen)]
         self.buttons = [Button(110,30,DARKGREEN),Button(330,30,DARKRED),Button(110,250,DARKYELLOW),Button(330,250,DARKBLUE)]
+        self.sound = [pygame.mixer.Sound(i) for i in audio_files]
+        [self.sound[i].set_volume(0.015) for i in range(4)]
+        self.loss_sound = pygame.mixer.Sound("Sound\Loss_sound.wav")
+        self.loss_sound.set_volume(0.015)
 
     def get_max_score(self): 
         with open("max_score.txt", "r") as file:
@@ -60,6 +64,7 @@ class Game:
                     self.current_step = 0
 
             elif self.clicked_button and self.clicked_button != self.order[self.current_step]:
+                self.loss_sound.play()
                 self.flash[0].animation()
                 self.save_score()
                 self.playing = False
@@ -77,6 +82,7 @@ class Game:
                 if self.dark_colours[i] == colour:
                     colour = self.colours[i]
                     button = self.buttons[i]
+                    self.sound[i].play()
         button_flash = Flash(button.x,button.y,SIZE_OF_BUTTON,SIZE_OF_BUTTON,colour,1,self.screen)
         button_flash.animation()
 

@@ -11,10 +11,12 @@ BLUE = (0, 0, 255)
 DARKBLUE = (0, 0, 155)
 
 
-# Game Settings
+# game settings
 WIDTH = 640
 HEIGHT = 520
 FPS = 60
 TITLE = "Simon Says"
 SIZE_OF_BUTTON = 200
 ANIMATION_SPEED = 10
+
+audio_files = ["Sound\Green_audio.wav","Sound\Red_audio.wav","Sound\Yellow_audio.wav","Sound\Blue_audio.wav"]

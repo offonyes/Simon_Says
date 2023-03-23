@@ -1,9 +1,10 @@
 import pygame, random
 from sprites import *
 from setting import *
-status = "New_open"
-logo = pygame.image.load("download-removebg-preview.png")
+
+logo = pygame.image.load("Logo_game.png")
 logo = pygame.transform.scale(logo,(600,90))
+
 class Game:
     def __init__(self): 
         pygame.init()
@@ -30,6 +31,7 @@ class Game:
             if self.score > self.max_score:
                 self.max_score = self.score
             file.write(str(self.max_score))
+
     def new(self):
         self.waiting_player = False
         self.order = []
@@ -37,15 +39,16 @@ class Game:
         self.score = 0
         self.max_score = self.get_max_score()
 
-
     def run(self):
-        self.playing = True
-        while self.playing:
+        self.playing = "Play"
+        while self.playing == "Play":
             self.clock.tick(FPS)
             self.clicked_button = None
             self.events()
             self.draw()
             self.update()
+        while self.playing == "Loss":
+            self.restart()
 
     def start(self):
         self.max_score = self.get_max_score()
@@ -78,11 +81,19 @@ class Game:
 
             elif self.clicked_button and self.clicked_button != self.order[self.current_step]:
                 self.loss_sound.play()
-                pygame.time.wait(200)
+                pygame.time.wait(500)
                 self.flash[0].animation()
                 self.save_score()
-                self.playing = False
-
+                self.playing = "Loss"
+                
+    def restart(self):
+        self.screen.fill((40, 40, 40))
+        TextOnScreen(100, 120, "PRESS ANY KEY",62,WHITE).draw(self.screen)
+        TextOnScreen(135, 190, "FOR RESTART",62,WHITE).draw(self.screen)
+        TextOnScreen(220, 280, f"Your score: {str(self.score)}",26,WHITE).draw(self.screen)
+        pygame.display.update()
+        self.events()
+        
     def draw(self):
         self.screen.fill((40, 40, 40))
         TextOnScreen(170, 480, f"Score: {str(self.score)}",16,WHITE).draw(self.screen)
@@ -115,10 +126,10 @@ class Game:
                     self.new()
                     self.run()
                     status = "Play"
+            if event.type == pygame.KEYDOWN:
+                self.playing = "Play"
         
-
 game = Game()
-
 while True:
     if status == "New_open":
         game.start()

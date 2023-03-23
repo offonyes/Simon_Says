@@ -13,6 +13,9 @@ class Button:
 
     def clicked(self, mouse_x, mouse_y):
         return self.x <= mouse_x <= self.x + self.size_x and self.y <= mouse_y <= self.y + self.size_y
+    
+    def draw_rounden(self, screen):
+        pygame.draw.ellipse(screen, self.colour,(self.x, self.y, self.size_x, self.size_y))
 
 
 class TextOnScreen:
